@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
 import Popup from './Popup.jsx';
 import './App.css'
+import loadingGif from './assets/loading.gif'
+import checkIco from './assets/check.ico'
+import closeIco from './assets/close.ico'
 
 /*
  * @author jimBoYz Ni ChOy!!!
@@ -28,7 +31,7 @@ const App = () => {
   const [holder, setHolder] = useState("Please send your prayer request, we are here to pray with.")
   const [description, setDescription] = useState('Send your Prayer Request')
   const [showPopup, setShowPopup] = useState(false)
-  const [icon, setIcon] = useState("./src/assets/loading.gif")
+  const [icon, setIcon] = useState(loadingGif)
   const [style, setStyle] = useState({
     display:'none',
   })
@@ -61,7 +64,7 @@ const App = () => {
     setStatus("Sending...");
     
     try {
-      const res = await fetch("http://localhost:3100/send-prayer-request", {
+      const res = await fetch("https://from-darkness-to-light-ministry-send.onrender.com/send-prayer-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({emailData}),
@@ -79,7 +82,7 @@ const App = () => {
           setStatus('Message sent successfully!')
         }
         
-        setIcon('./src/assets/check.ico');
+        setIcon(checkIco);
         setStyle({
           display:'flex',
           justifyContent: 'center',
@@ -89,7 +92,7 @@ const App = () => {
 
       } else {
         setStatus("Failed to send.");
-        setIcon('./src/assets/close.ico');
+        setIcon(closeIco);
         setStyle({
           display:'flex',
           justifyContent: 'center',
@@ -101,7 +104,7 @@ const App = () => {
     } catch (err) {
       console.error(err);
       setStatus("Error occurred.");
-      setIcon('./src/assets/close.ico')
+      setIcon(closeIco)
       setStyle({
         display:'flex',
         justifyContent: 'center',
@@ -113,7 +116,7 @@ const App = () => {
 
   const handleClosePopup = () => {
     setShowPopup(false);
-    setIcon('./src/assets/loading.gif');
+    setIcon(loadingGif);
     setStyle({
       display:'none',
     })
