@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  place-items: center;
+  place-content: center;
+  min-height: 100vh;
+  background-color: rgba(255, 255, 255, 0.852);
+
+}
