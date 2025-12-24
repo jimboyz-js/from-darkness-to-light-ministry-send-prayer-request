@@ -64,13 +64,24 @@ const App = () => {
     setStatus("Sending...");
     
     try {
-      const res = await fetch("https://from-darkness-to-light-ministry-send.onrender.com/send-prayer-request", {
+      // const res = await fetch("https://from-darkness-to-light-ministry-send.onrender.com/send-prayer-request", {
+
+      // I updated the JSON Body because Render (render.com, where my send email service through SMTP is hosted) block all the SMTP port for *all free account (free tier account) if I am not mistaken, Render updated on Sept.
+      // Instead, I used my other email service api that was hosted via Vercel (vercel.com).
+      // Updated: 12-24-2025 WED. 4:47 PM
+      const name = emailData.name;
+      const recipient = emailData.email;
+      const subject = emailData.subject;
+      const message = `Date: ${emailData.date} : ${emailData.dateTime} \nEmail: ${emailData.email} \nMessage: ${emailData.body}`;
+      const res = await fetch("https://jimboyz-email-sender-api.vercel.app/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({emailData}),
+        // body: JSON.stringify({emailData}), //works with my first email-service
+        body: JSON.stringify({name, recipient, subject, message}),
       });
 
       const data = await res.json();
+      console.log(data);
       if (res.ok) {
         if(description === 'Send your Prayer Request') {
           setStatus("Your prayer request is sent successfully!");
